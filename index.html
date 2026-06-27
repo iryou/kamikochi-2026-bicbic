@@ -1,0 +1,708 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>上高地・焼岳 旅のしおり</title>
+  <style>
+    :root {
+      --ink: #1d2a24;
+      --muted: #607067;
+      --paper: #fbfaf6;
+      --line: #d9e1dc;
+      --river: #0f7b8f;
+      --forest: #1f6b4c;
+      --moss: #8eaa5a;
+      --sun: #d89b42;
+      --mist: #edf3ef;
+      --white: #fff;
+      --shadow: 0 18px 50px rgba(29, 42, 36, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", "Yu Gothic UI", Meiryo, sans-serif;
+      line-height: 1.75;
+    }
+
+    .hero {
+      min-height: 78svh;
+      display: grid;
+      align-items: end;
+      position: relative;
+      overflow: hidden;
+      color: var(--white);
+      background-image:
+        linear-gradient(180deg, rgba(11, 24, 22, 0.08), rgba(11, 24, 22, 0.76)),
+        url("kamikochi-shiori-assets/kamikochi-hero.png");
+      background-size: cover;
+      background-position: center;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0;
+      height: 26%;
+      background: linear-gradient(180deg, rgba(251, 250, 246, 0), var(--paper));
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 120px 0 96px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 18px;
+      font-size: 0.92rem;
+      font-weight: 800;
+      text-shadow: 0 2px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    .kicker::before {
+      content: "";
+      width: 34px;
+      height: 2px;
+      background: var(--sun);
+      border-radius: 999px;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 880px;
+      font-size: clamp(2.6rem, 8vw, 6.8rem);
+      line-height: 0.98;
+      letter-spacing: 0;
+      text-shadow: 0 8px 34px rgba(0, 0, 0, 0.34);
+    }
+
+    .hero-copy {
+      max-width: 720px;
+      margin: 24px 0 0;
+      font-size: clamp(1rem, 2vw, 1.22rem);
+      text-shadow: 0 2px 18px rgba(0, 0, 0, 0.34);
+    }
+
+    main {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto 80px;
+    }
+
+    section { margin: 54px 0; }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 18px;
+      border-bottom: 2px solid var(--line);
+      padding-bottom: 12px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(1.45rem, 3vw, 2.2rem);
+      line-height: 1.25;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin: 0 0 12px;
+      font-size: 1.15rem;
+      line-height: 1.35;
+      letter-spacing: 0;
+    }
+
+    .section-note {
+      margin: 0;
+      color: var(--muted);
+      font-weight: 800;
+      text-align: right;
+      font-size: 0.95rem;
+    }
+
+    .grid { display: grid; gap: 16px; }
+    .grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    .card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 8px 24px rgba(29, 42, 36, 0.06);
+    }
+
+    .highlight { border-left: 5px solid var(--river); }
+    .decision { background: #f3f7f2; border-color: #cdddcf; }
+
+    .label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      color: var(--forest);
+      font-size: 0.82rem;
+      font-weight: 900;
+    }
+
+    .label .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--sun);
+    }
+
+    .fact-list,
+    .compact-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .fact-list li {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .fact-list li:last-child { border-bottom: 0; }
+    .fact-list span:first-child {
+      color: var(--muted);
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .fact-list span:last-child {
+      text-align: right;
+      font-weight: 900;
+    }
+
+    .compact-list li {
+      position: relative;
+      padding-left: 18px;
+      margin: 7px 0;
+    }
+
+    .compact-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.75em;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--moss);
+    }
+
+    .choice-group {
+      margin-top: 28px;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+    }
+
+    .section-head + .choice-group {
+      margin-top: 0;
+      padding-top: 0;
+      border-top: 0;
+    }
+
+    .choice-group-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+
+    .choice-group-head h3 {
+      margin: 0;
+      font-size: 1.32rem;
+    }
+
+    .choice-group-head p {
+      margin: 0;
+      color: var(--muted);
+      font-weight: 900;
+      text-align: right;
+    }
+
+    .choice-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .route-choice {
+      display: grid;
+      gap: 14px;
+    }
+
+    .choice-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .choice-top h3 { margin: 0; }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: #eaf2f3;
+      color: var(--river);
+      font-size: 0.82rem;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .day-band {
+      margin: 28px 0 18px;
+      padding: 12px 16px;
+      color: var(--white);
+      background: var(--forest);
+      border-radius: 8px;
+      font-weight: 900;
+    }
+
+    .timeline { display: grid; gap: 10px; }
+
+    .schedule-compare {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      align-items: start;
+      margin-top: 28px;
+    }
+
+    .schedule-compare .day-band {
+      margin-top: 0;
+    }
+
+    .schedule-compare .time-row {
+      grid-template-columns: 104px minmax(0, 1fr);
+      gap: 12px;
+    }
+
+    .time-row {
+      display: grid;
+      grid-template-columns: 132px minmax(0, 1fr);
+      gap: 16px;
+      align-items: start;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .time-row:last-child { border-bottom: 0; }
+    .time {
+      color: var(--river);
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .time-title { margin: 0; font-weight: 900; }
+    .time-note {
+      margin: 2px 0 0;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .temp-note {
+      display: inline-flex;
+      align-items: center;
+      margin-top: 8px;
+      padding: 5px 9px;
+      border-radius: 6px;
+      color: #245044;
+      background: #edf4ee;
+      font-size: 0.86rem;
+      font-weight: 800;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--white);
+    }
+
+    th,
+    td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      color: var(--forest);
+      background: #edf4ee;
+      font-size: 0.9rem;
+    }
+
+    tr:last-child td { border-bottom: 0; }
+    td:last-child,
+    th:last-child { text-align: right; }
+
+    .print-footer {
+      margin-top: 64px;
+      padding-top: 22px;
+      border-top: 2px solid var(--line);
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 820px) {
+      .hero { min-height: 72svh; }
+      .grid.two,
+      .grid.three,
+      .choice-grid,
+      .schedule-compare {
+        grid-template-columns: 1fr;
+      }
+
+      .schedule-compare .time-row {
+        grid-template-columns: 92px minmax(0, 1fr);
+      }
+
+      .section-head,
+      .choice-group-head {
+        display: block;
+      }
+
+      .section-note,
+      .choice-group-head p {
+        margin-top: 8px;
+        text-align: left;
+      }
+
+      .time-row {
+        grid-template-columns: 92px minmax(0, 1fr);
+        gap: 12px;
+      }
+
+      .fact-list li { display: block; }
+      .fact-list span:last-child {
+        display: block;
+        text-align: left;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .hero-inner {
+        width: min(100% - 24px, 1120px);
+        padding-bottom: 72px;
+      }
+
+      main {
+        width: min(100% - 24px, 1120px);
+      }
+
+      .card { padding: 16px; }
+      .time-row { grid-template-columns: 1fr; gap: 2px; }
+      table { font-size: 0.92rem; }
+      th,
+      td { padding: 10px; }
+    }
+
+    @media print {
+      body { background: #fff; }
+      .hero {
+        min-height: 32vh;
+        color: #fff;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+      }
+
+      main {
+        width: auto;
+        margin: 0 12mm 16mm;
+      }
+
+      section {
+        break-inside: avoid;
+        margin: 28px 0;
+      }
+
+      .card,
+      table {
+        box-shadow: none;
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <p class="kicker">2026.7.29 WED - 8.1 SAT / 4 PEOPLE</p>
+      <h1>上高地・焼岳<br>旅のしおり</h1>
+      <p class="hero-copy">夜行バスで上高地へ。明神池、嘉門次小屋、小梨平のケビン泊、焼岳登山または上高地散策、最後は松本で打ち上げ。</p>
+    </div>
+  </header>
+
+  <main>
+    <section id="overview">
+      <div class="section-head">
+        <h2>旅行概要</h2>
+        <p class="section-note">予約済み情報と未確定事項を最初に確認</p>
+      </div>
+
+      <div class="grid three">
+        <article class="card highlight">
+          <span class="label"><span class="dot"></span>基本情報</span>
+          <ul class="fact-list">
+            <li><span>日程</span><span>2026年7月29日（水）夜 - 8月1日（土）</span></li>
+            <li><span>人数</span><span>4名</span></li>
+            <li><span>往路</span><span>新宿から上高地へ夜行バス予定</span></li>
+            <li><span>目的</span><span>上高地散策、焼岳登山または代替散策、松本泊</span></li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <span class="label"><span class="dot"></span>7/30 宿泊</span>
+          <ul class="fact-list">
+            <li><span>施設</span><span>小梨平キャンプ場</span></li>
+            <li><span>タイプ</span><span>ケビンD</span></li>
+            <li><span>料金</span><span>4人合計 34,000円</span></li>
+            <li><span>1人あたり</span><span>8,500円</span></li>
+            <li><span>備考</span><span>キッチンあり、夕食未定</span></li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <span class="label"><span class="dot"></span>7/31 宿泊</span>
+          <ul class="fact-list">
+            <li><span>ホテル</span><span>東横イン松本駅東口</span></li>
+            <li><span>部屋</span><span>シングル4部屋</span></li>
+            <li><span>料金</span><span>4人合計 31,603円</span></li>
+            <li><span>1人あたり</span><span>約7,901円</span></li>
+            <li><span>備考</span><span>Booking.comで予約済み</span></li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="grid two" style="margin-top: 16px;">
+        <article class="card decision">
+          <h3>予約予定：往路バス</h3>
+          <ul class="compact-list">
+            <li>2026年7月29日（水）夜発、バスタ新宿から上高地方面。</li>
+            <li>希望は夜行便、3列独立シート。</li>
+            <li>予約開始は2026年6月29日（月）8:00予定。4名分のため開始直後に確保したい。</li>
+          </ul>
+        </article>
+
+        <article class="card decision">
+          <h3>重要な未確定事項</h3>
+          <ul class="compact-list">
+            <li>往路バスの予約、7/30の降車地、7/30夕食。</li>
+            <li>焼岳の通行可否、上高地から松本への具体的な便。</li>
+            <li>7/31の温泉・ランチ場所、松本打ち上げ店。</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="choices">
+      <div class="section-head">
+        <h2>判断ポイント</h2>
+        <p class="section-note">当日の天気と体力で切り替える</p>
+      </div>
+
+      <div class="choice-group">
+        <div class="choice-group-head">
+          <h3>7/30（木）の二択</h3>
+          <p>降車地を選ぶ：体力温存か、早朝の景色か</p>
+        </div>
+        <div class="choice-grid">
+          <article class="card route-choice">
+            <div class="choice-top">
+              <h3>本命：上高地BTスタート</h3>
+              <span class="badge">体力温存</span>
+            </div>
+            <p>到着後に温かい朝食を食べ、早めに荷物を預けやすいプラン。夜行バス明けでも無理が少なく、翌日が焼岳登山でも体力を残しやすい。</p>
+            <ul class="compact-list">
+              <li>朝食、荷物、休憩の扱いが一番スムーズ。</li>
+              <li>大正池の早朝風景は見送る。</li>
+            </ul>
+          </article>
+
+          <article class="card route-choice">
+            <div class="choice-top">
+              <h3>魅力：大正池スタート</h3>
+              <span class="badge">景色重視</span>
+            </div>
+            <p>早朝の大正池・田代池を楽しめる写真向きプラン。上高地の見どころを広く回れる一方、朝食と荷物、翌日の疲労が課題。</p>
+            <ul class="compact-list">
+              <li>新宿で軽食を買っておくと安心。</li>
+              <li>歩行距離が増えるため、翌日の登山判断に影響する可能性あり。</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+
+      <div class="choice-group">
+        <div class="choice-group-head">
+          <h3>7/31（金）の二択</h3>
+          <p>焼岳へ行くか、上高地でゆっくり過ごすか</p>
+        </div>
+        <div class="choice-grid">
+          <article class="card route-choice">
+            <div class="choice-top">
+              <h3>焼岳登山</h3>
+              <span class="badge">通行可・好天時</span>
+            </div>
+            <p>通行止め解除、安全確認、天候、体調がそろった場合に実施。早出して、下山後は温泉とホテルランチを優先する。</p>
+            <ul class="compact-list">
+              <li>下山が遅れた場合は温泉またはランチを省略。</li>
+              <li>出発直前に通行情報を必ず確認。</li>
+            </ul>
+          </article>
+
+          <article class="card route-choice">
+            <div class="choice-top">
+              <h3>代替散策</h3>
+              <span class="badge">雨天・中止時</span>
+            </div>
+            <p>無理に登山せず、上高地散策・温泉・ランチを楽しむ。雨天時は遠くまで行かず、満足度の高い過ごし方へ切り替える。</p>
+            <ul class="compact-list">
+              <li>候補は岳沢湿原、大正池方面、徳沢方面。</li>
+              <li>温泉とランチをメインイベントにするのも良い。</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="schedule">
+      <div class="section-head">
+        <h2>日別行程</h2>
+        <p class="section-note">時間は目安。天候・混雑で調整</p>
+      </div>
+
+      <div class="day-band">7/29（水） 共通行程</div>
+      <article class="card timeline">
+        <div class="time-row"><div class="time">22:25頃</div><div><p class="time-title">バスタ新宿 出発</p><p class="time-note">夜行バスで上高地方面へ。出発前に飲み物、軽食、行動食を購入。大正池スタートにする場合は朝食用のおにぎり・パンもここで確保。</p><p class="temp-note">気温目安：新宿の夜 25-29℃、車内は冷房対策</p></div></div>
+      </article>
+
+      <div class="schedule-compare">
+        <div>
+          <div class="day-band">7/30（木） パターンA：上高地BTスタート</div>
+          <article class="card timeline">
+            <div class="time-row"><div class="time">05:20頃</div><div><p class="time-title">上高地バスターミナル着</p><p class="time-note">夜行バス到着。</p><p class="temp-note">気温目安：上高地の早朝 12-16℃</p></div></div>
+            <div class="time-row"><div class="time">06:00頃</div><div><p class="time-title">上高地食堂で朝食</p><p class="time-note">温かい朝食で整える。行動食や飲み物が足りなければBT周辺で補充。</p></div></div>
+            <div class="time-row"><div class="time">07:00頃</div><div><p class="time-title">河童橋周辺散策</p><p class="time-note">梓川、穂高連峰、写真撮影。</p></div></div>
+            <div class="time-row"><div class="time">08:00頃</div><div><p class="time-title">小梨平キャンプ場へ移動</p><p class="time-note">荷物預け想定。</p></div></div>
+            <div class="time-row"><div class="time">08:30頃</div><div><p class="time-title">明神方面へ出発</p><p class="time-note">ほぼ平坦な散策路。</p></div></div>
+            <div class="time-row"><div class="time">09:30頃</div><div><p class="time-title">明神池・穂高神社奥宮</p><p class="time-note">散策・参拝。</p></div></div>
+            <div class="time-row"><div class="time">11:00-12:30頃</div><div><p class="time-title">嘉門次小屋で昼食</p><p class="time-note">岩魚塩焼き、岩魚定食、そば候補。混雑・売り切れ注意。</p><p class="temp-note">気温目安：日中 20-24℃、日差しがあると暑め</p></div></div>
+            <div class="time-row"><div class="time">14:00-15:00頃</div><div><p class="time-title">小梨平帰着、ケビンDチェックイン</p><p class="time-note">休憩してから入室。</p></div></div>
+            <div class="time-row"><div class="time">16:00頃</div><div><p class="time-title">小梨の湯</p><p class="time-note">入浴候補。</p></div></div>
+            <div class="time-row"><div class="time">17:30頃</div><div><p class="time-title">夕食</p><p class="time-note">小梨平食堂、売店購入、ケビンで簡単調理から決定。翌朝の朝食用パン・おにぎり、焼岳用の行動食と飲み物もこのタイミングまでに購入。</p></div></div>
+            <div class="time-row"><div class="time">21:00頃</div><div><p class="time-title">就寝</p><p class="time-note">翌日に備えて早寝。</p><p class="temp-note">気温目安：夜 12-16℃</p></div></div>
+          </article>
+        </div>
+
+        <div>
+          <div class="day-band">7/30（木） パターンB：大正池スタート</div>
+          <article class="card timeline">
+            <div class="time-row"><div class="time">05:12頃</div><div><p class="time-title">大正池 下車</p><p class="time-note">夜行バスを大正池で降りる。</p><p class="temp-note">気温目安：早朝 12-16℃、水辺は涼しめ</p></div></div>
+            <div class="time-row"><div class="time">05:15-07:30頃</div><div><p class="time-title">大正池、田代池、田代湿原方面へ</p><p class="time-note">焼岳、穂高連峰、水鏡の早朝風景。</p></div></div>
+            <div class="time-row"><div class="time">08:00頃</div><div><p class="time-title">上高地食堂で朝食</p><p class="time-note">遅めの朝食。大正池では新宿で買った軽食を先に補給しておく。</p></div></div>
+            <div class="time-row"><div class="time">09:00頃</div><div><p class="time-title">小梨平キャンプ場へ移動</p><p class="time-note">荷物預け想定。</p></div></div>
+            <div class="time-row"><div class="time">09:30-12:30頃</div><div><p class="time-title">明神方面、嘉門次小屋で昼食</p><p class="time-note">体力を見て調整。昼食は岩魚塩焼き、岩魚定食、そば候補。</p><p class="temp-note">気温目安：日中 20-24℃</p></div></div>
+            <div class="time-row"><div class="time">14:00-21:00頃</div><div><p class="time-title">小梨平帰着、入浴、夕食、就寝</p><p class="time-note">以降はパターンAと同様。翌朝の朝食、行動食、飲み物は夕方までに購入。</p></div></div>
+          </article>
+        </div>
+      </div>
+
+      <div class="day-band">7/31（金） パターン1：焼岳登山</div>
+      <article class="card timeline">
+        <div class="time-row"><div class="time">04:30</div><div><p class="time-title">起床</p><p class="time-note">天気・通行情報確認。</p><p class="temp-note">気温目安：上高地の早朝 12-15℃</p></div></div>
+        <div class="time-row"><div class="time">05:00</div><div><p class="time-title">朝食</p><p class="time-note">前日購入したパン・おにぎり等。焼岳用の行動食と飲み物も忘れず持つ。</p></div></div>
+        <div class="time-row"><div class="time">05:30</div><div><p class="time-title">焼岳登山開始</p><p class="time-note">早出推奨。</p></div></div>
+        <div class="time-row"><div class="time">08:30-09:00頃</div><div><p class="time-title">焼岳山頂</p><p class="time-note">休憩・写真撮影。</p><p class="temp-note">気温目安：山頂付近 8-13℃、風で体感はさらに低め</p></div></div>
+        <div class="time-row"><div class="time">09:30頃</div><div><p class="time-title">下山開始</p><p class="time-note">無理せず下山。</p></div></div>
+        <div class="time-row"><div class="time">12:00頃</div><div><p class="time-title">上高地帰着</p><p class="time-note">遅れる可能性あり。</p></div></div>
+        <div class="time-row"><div class="time">12:30-13:30頃</div><div><p class="time-title">温泉＋ホテルランチ</p><p class="time-note">上高地温泉ホテル、上高地ルミエスタホテル、帝国ホテル アルペンローゼ候補。下山が遅れたら温泉またはランチを省略。</p><p class="temp-note">気温目安：上高地の日中 20-24℃</p></div></div>
+        <div class="time-row"><div class="time">15:30-18:30頃</div><div><p class="time-title">上高地発、松本着、ホテルチェックイン</p><p class="time-note">バス＋電車想定。東横イン松本駅東口へ。</p></div></div>
+        <div class="time-row"><div class="time">19:00頃</div><div><p class="time-title">松本で打ち上げ</p><p class="time-note">山賊焼き、信州サーモン、信州そば、野沢菜、地酒など。馬刺しは候補から外す。登山後なので駅やホテルから行きやすい店が良さそう。</p><p class="temp-note">気温目安：松本の夜 24-28℃</p></div></div>
+      </article>
+
+      <div class="day-band">7/31（金） パターン2：焼岳中止・代替散策</div>
+      <article class="card timeline">
+        <div class="time-row"><div class="time">06:00頃</div><div><p class="time-title">起床</p><p class="time-note">中止判断後、ゆっくり開始。</p><p class="temp-note">気温目安：上高地の朝 13-17℃</p></div></div>
+        <div class="time-row"><div class="time">07:30-11:00頃</div><div><p class="time-title">上高地散策</p><p class="time-note">岳沢湿原、大正池方面、河童橋周辺、徳沢方面などから選択。</p></div></div>
+        <div class="time-row"><div class="time">11:30-12:30頃</div><div><p class="time-title">日帰り温泉＋ホテルランチ</p><p class="time-note">温泉とランチをメインイベントに。余裕があれば徳沢方面でピザ・ソフトクリームも候補。</p><p class="temp-note">気温目安：上高地の日中 20-24℃</p></div></div>
+        <div class="time-row"><div class="time">14:30-16:00頃</div><div><p class="time-title">お土産・カフェ・自由時間、上高地発</p><p class="time-note">上高地BT周辺。松本への移動時刻は余裕を持つ。</p></div></div>
+        <div class="time-row"><div class="time">18:30-22:00頃</div><div><p class="time-title">松本チェックイン、打ち上げ、就寝</p><p class="time-note">東横イン松本駅東口。打ち上げは山賊焼き、信州サーモン、信州そば、野沢菜、地酒など。馬刺しは候補から外す。</p><p class="temp-note">気温目安：松本の夜 24-28℃</p></div></div>
+      </article>
+
+      <div class="day-band">8/1（土） 共通行程</div>
+      <article class="card timeline">
+        <div class="time-row"><div class="time">07:30-08:30頃</div><div><p class="time-title">東横イン無料朝食</p><p class="time-note">ホテル朝食。</p><p class="temp-note">気温目安：松本の朝 22-26℃</p></div></div>
+        <div class="time-row"><div class="time">09:00-11:30頃</div><div><p class="time-title">松本散策</p><p class="time-note">松本城、中町通り、なわて通りなど。</p><p class="temp-note">気温目安：日中 30-34℃、街歩きは暑さ対策</p></div></div>
+        <div class="time-row"><div class="time">12:30頃</div><div><p class="time-title">松本駅周辺</p><p class="time-note">昼食または買い物。帰りの車内用の飲み物もここで購入。</p></div></div>
+        <div class="time-row"><div class="time">13:00頃</div><div><p class="time-title">特急あずさ乗車</p><p class="time-note">松本から新宿へ。</p></div></div>
+        <div class="time-row"><div class="time">15:40頃</div><div><p class="time-title">新宿着</p><p class="time-note">解散。</p></div></div>
+      </article>
+    </section>
+
+    <section id="budget">
+      <div class="section-head">
+        <h2>予算</h2>
+        <p class="section-note">1人あたり約43,000-55,000円</p>
+      </div>
+
+      <div class="grid two">
+        <article>
+          <h3>確定費用</h3>
+          <table>
+            <thead><tr><th>項目</th><th>4人合計</th><th>1人あたり</th></tr></thead>
+            <tbody>
+              <tr><td>小梨平ケビンD</td><td>34,000円</td><td>8,500円</td></tr>
+              <tr><td>東横イン松本駅東口</td><td>31,603円</td><td>約7,901円</td></tr>
+            </tbody>
+          </table>
+        </article>
+
+        <article>
+          <h3>概算費用（1人あたり）</h3>
+          <table>
+            <thead><tr><th>項目</th><th>目安</th></tr></thead>
+            <tbody>
+              <tr><td>新宿 → 上高地 夜行バス</td><td>10,000-15,000円</td></tr>
+              <tr><td>上高地での飲食</td><td>4,000-7,000円</td></tr>
+              <tr><td>上高地 → 松本</td><td>2,000-3,000円</td></tr>
+              <tr><td>松本打ち上げ</td><td>4,000-6,000円</td></tr>
+              <tr><td>松本 → 新宿 特急あずさ</td><td>6,500-7,500円</td></tr>
+            </tbody>
+          </table>
+        </article>
+      </div>
+    </section>
+
+    <p class="print-footer">Generated from the provided itinerary memo for local browser viewing. 表紙画像はしおり用に生成したイメージです。</p>
+  </main>
+</body>
+</html>
