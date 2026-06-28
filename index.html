@@ -293,6 +293,10 @@
       margin-top: 28px;
     }
 
+    .schedule-tabs {
+      display: none;
+    }
+
     .schedule-compare .day-band {
       margin-top: 0;
     }
@@ -376,9 +380,48 @@
       .hero { min-height: 72svh; }
       .grid.two,
       .grid.three,
-      .choice-grid,
-      .schedule-compare {
+      .choice-grid {
         grid-template-columns: 1fr;
+      }
+
+      .schedule-tabs {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+        margin: 28px 0 10px;
+        padding: 6px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #f3f7f2;
+      }
+
+      .schedule-tab {
+        min-height: 44px;
+        border: 0;
+        border-radius: 6px;
+        color: var(--forest);
+        background: transparent;
+        font: inherit;
+        font-weight: 900;
+        cursor: pointer;
+      }
+
+      .schedule-tab[aria-selected="true"] {
+        color: var(--white);
+        background: var(--forest);
+      }
+
+      .schedule-compare {
+        display: block;
+        margin-top: 0;
+      }
+
+      .schedule-panel {
+        display: none;
+      }
+
+      .schedule-panel.is-active {
+        display: block;
       }
 
       .schedule-compare .time-row {
@@ -448,6 +491,14 @@
       table {
         box-shadow: none;
         break-inside: avoid;
+      }
+
+      .schedule-tabs {
+        display: none;
+      }
+
+      .schedule-panel {
+        display: block;
       }
     }
   </style>
@@ -605,8 +656,13 @@
         <div class="time-row"><div class="time">22:25頃</div><div><p class="time-title">バスタ新宿 出発</p><p class="time-note">夜行バスで上高地方面へ。出発前に飲み物、軽食、行動食を購入。大正池スタートにする場合は朝食用のおにぎり・パンもここで確保。</p><p class="temp-note">気温目安：新宿の夜 25-29℃、車内は冷房対策</p></div></div>
       </article>
 
+      <div class="schedule-tabs" role="tablist" aria-label="7/30の行程切り替え">
+        <button class="schedule-tab" type="button" role="tab" aria-selected="true" aria-controls="schedule-0730-a" id="tab-0730-a" data-schedule-tab="schedule-0730-a">パターンA</button>
+        <button class="schedule-tab" type="button" role="tab" aria-selected="false" aria-controls="schedule-0730-b" id="tab-0730-b" data-schedule-tab="schedule-0730-b">パターンB</button>
+      </div>
+
       <div class="schedule-compare">
-        <div>
+        <div class="schedule-panel is-active" id="schedule-0730-a" role="tabpanel" aria-labelledby="tab-0730-a">
           <div class="day-band">7/30（木） パターンA：上高地BTスタート</div>
           <article class="card timeline">
             <div class="time-row"><div class="time">05:20頃</div><div><p class="time-title">上高地バスターミナル着</p><p class="time-note">夜行バス到着。</p><p class="temp-note">気温目安：上高地の早朝 12-16℃</p></div></div>
@@ -623,7 +679,7 @@
           </article>
         </div>
 
-        <div>
+        <div class="schedule-panel" id="schedule-0730-b" role="tabpanel" aria-labelledby="tab-0730-b">
           <div class="day-band">7/30（木） パターンB：大正池スタート</div>
           <article class="card timeline">
             <div class="time-row"><div class="time">05:12頃</div><div><p class="time-title">大正池 下車</p><p class="time-note">夜行バスを大正池で降りる。</p><p class="temp-note">気温目安：早朝 12-16℃、水辺は涼しめ</p></div></div>
@@ -704,5 +760,18 @@
 
     <p class="print-footer">Generated from the provided itinerary memo for local browser viewing. 表紙画像はしおり用に生成したイメージです。</p>
   </main>
+  <script>
+    document.querySelectorAll("[data-schedule-tab]").forEach((tab) => {
+      tab.addEventListener("click", () => {
+        const targetId = tab.dataset.scheduleTab;
+        document.querySelectorAll("[data-schedule-tab]").forEach((item) => {
+          item.setAttribute("aria-selected", String(item === tab));
+        });
+        document.querySelectorAll(".schedule-panel").forEach((panel) => {
+          panel.classList.toggle("is-active", panel.id === targetId);
+        });
+      });
+    });
+  </script>
 </body>
 </html>
